@@ -177,13 +177,21 @@ Mobile
 
     /* Both corner blocks at wordmark size don't fit side by
        side on a phone, so the tag sits above the wordmark
-       instead of beside it — same size, no collision. */
+       instead of beside it — same size, no collision.
+
+       Clearing the wordmark is not enough on its own, though:
+       the button sits between the two, and at +20px the tag
+       landed on it. The extra 130px is that button — 62px tall,
+       sitting 152px off the bottom — plus room to breathe, so
+       the bottom of the hero reads as three separate bands:
+       tag, button, wordmark. 100px cleared it by 3px at 414px
+       wide, which is not clearance, it is luck. */
 
     .heroTag {
         bottom: calc(
             var(--hero-mark-gap, 60px)
             + var(--hero-mark-block, 120px)
-            + 20px
+            + 130px
         );
     }
 
@@ -345,9 +353,27 @@ about things that were sized for a wide screen.
        Stronger and larger, because here it IS the hero rather
        than a texture behind the robot. */
 
+    /* The size has to come off the longest line, not off taste.
+       "Creative Agency For" measures 961px per 100px of font, the
+       lines are `white-space: nowrap` so they cannot reflow, and
+       the layer has a 15px gutter each side - so the ceiling is
+       (100vw - 30px) / 9.61, which is a shade under 9.6vw. At
+       8.8vw every width from 320px to 900px clears it by at least
+       20px. 11vw clipped the line from about 400px to 690px. */
+
     .heroBackText .heroTitle {
         color: rgba(255, 255, 255, .34);
-        font-size: clamp(34px, 11vw, 62px);
+        font-size: clamp(20px, 8.8vw, 62px);
+    }
+
+    /* Belt and braces. The figure above is measured against the
+       loaded heading font; a fallback with wider metrics would
+       clip again, and a clipped headline is worse than a wrapped
+       one. The designed breaks are their own blocks, so this only
+       ever adds a break to a line that would not have fitted. */
+
+    .heroBackText .heroTitle-line {
+        white-space: normal;
     }
 
     .heroBackText {
@@ -409,8 +435,13 @@ about things that were sized for a wide screen.
         height: 320vh;
     }
 
+    /* 17vw put "watching" - the longest word - at 366px of a
+       375px screen, 4px of margin each side. It is centred, so
+       that is not a clip yet, but nothing about the stage is
+       that precise. 16vw leaves 15px. */
+
     .manifesto-word {
-        font-size: clamp(42px, 17vw, 92px);
+        font-size: clamp(38px, 16vw, 92px);
     }
 
 }
@@ -439,10 +470,6 @@ Very narrow phones (SE, mini)
 ==============================*/
 
 @media (max-width: 400px) {
-
-    .heroBackText .heroTitle {
-        font-size: clamp(30px, 10vw, 46px);
-    }
 
     .footerDrop-pill {
         padding: 12px 20px;

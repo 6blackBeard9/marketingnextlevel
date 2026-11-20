@@ -384,8 +384,16 @@ function initBrandMark() {
         mark.style.setProperty("--level-x", (-(w[0] + w[1])) + "px");
         mark.style.setProperty("--lh", lh + "px");
 
+        /* A phone has no room for the desktop wordmark. Held at
+           the 34px floor, the three-line stack stood 100px tall -
+           an eighth of a 812px screen - and sat squarely on top of
+           the call to action. The width term is already tiny at
+           this size, so it is the floor that has to come down. */
+
+        const narrow = window.innerWidth < 640;
+
         const heroPx = Math.min(
-            Math.max(34, window.innerWidth * 0.046), 64
+            Math.max(narrow ? 24 : 34, window.innerWidth * 0.046), 64
         );
 
         const scale = heroPx / dockPx;
@@ -394,7 +402,10 @@ function initBrandMark() {
 
         // Three stacked lines, sitting above the hero's bottom
         const blockH = lh * 3 * scale;
-        const gap = Math.max(46, window.innerHeight * 0.09);
+        /* 9% of a tall phone is 73px of empty space under a block
+           that is already too low. The floor is enough here. */
+
+        const gap = Math.max(46, window.innerHeight * (narrow ? 0.05 : 0.09));
         const heroTop = window.innerHeight - gap - blockH;
 
         // .heroTag mirrors this block in the opposite corner, so
