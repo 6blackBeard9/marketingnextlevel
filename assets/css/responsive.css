@@ -184,18 +184,16 @@ Mobile
        landed on it. The extra 130px is that button — 62px tall,
        sitting 152px off the bottom — plus room to breathe, so
        the bottom of the hero reads as three separate bands:
-       tag, button, wordmark.
-
-       165px rather than 130px because the wordmark is one line
-       on a phone now, not three — its block is a third of the
-       height it was, so the tag rides correspondingly lower and
-       needs the difference back. */
+       tag, button, wordmark. 130px is that button — 62px tall,
+       sitting 152px off the bottom — plus room to breathe. At
+       100px it cleared by 3px at 414px wide, which is not
+       clearance, it is luck. */
 
     .heroTag {
         bottom: calc(
             var(--hero-mark-gap, 60px)
             + var(--hero-mark-block, 120px)
-            + 165px
+            + 130px
         );
     }
 

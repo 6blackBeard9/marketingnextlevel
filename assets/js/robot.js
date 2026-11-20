@@ -431,6 +431,38 @@ function start(canvas) {
 
         rig.scale.setScalar(Math.min(SCALE_CAP, world.width / 3.5));
 
+        /* Centre the robot in the canvas on a phone.
+
+           The camera sits slightly above the origin, which reads
+           well on a wide screen but leaves the robot 46px low on
+           a 375px one - and low is exactly where the tag and the
+           wordmark are, so it was overlapping the tag by 27px.
+
+           Measured rather than nudged by a constant: the rig's
+           own midpoint is not its origin (the body hangs at
+           -0.3) and both it and the scale move with the
+           viewport, so the offset is solved each resize. Putting
+           that midpoint on the camera's sight line is what lands
+           it on the middle of the canvas.
+
+           Phones only - the wide composition is deliberate. */
+
+        if (window.innerWidth < 640) {
+
+            rig.position.y = 0;
+            rig.updateMatrixWorld(true);
+
+            const span = new THREE.Box3().setFromObject(rig);
+
+            rig.position.y =
+                camera.position.y - (span.min.y + span.max.y) / 2;
+
+        } else {
+
+            rig.position.y = 0;
+
+        }
+
     }
 
     /* ==============================

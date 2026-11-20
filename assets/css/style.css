@@ -2701,17 +2701,6 @@ the offsets depend on the rendered width of each word.
 
 }
 
-/* Set by app.js below 640px. The words are inline to begin with -
-   the offsets above are what stacks them - so dropping the
-   transform is all it takes to put them back on one line. */
-
-.brandMark.is-hero.is-inline .brandMark-word:nth-child(2),
-.brandMark.is-hero.is-inline .brandMark-word:nth-child(3) {
-
-    transform: none;
-
-}
-
 /* Reserves the wordmark's slot in the bar so the section
    label stays centred; the mark itself is fixed. */
 

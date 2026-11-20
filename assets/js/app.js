@@ -384,39 +384,27 @@ function initBrandMark() {
         mark.style.setProperty("--level-x", (-(w[0] + w[1])) + "px");
         mark.style.setProperty("--lh", lh + "px");
 
-        /* A phone gets the three words on one line rather than
-           stacked. The stack exists to use width a desktop has
-           going spare; on a 375px screen it is three rows of hero
-           type eating the bottom third, and it was landing on the
-           call to action. CSS drops the per-word offsets off the
-           class; the only thing to do here is stop reserving the
-           other two rows. */
+        /* The three words stay stacked at every size - that shape
+           is the mark. A phone just gets it smaller: held at the
+           34px floor the stack stood 100px tall, an eighth of an
+           812px screen, and pushed up into the call to action.
+           The width term is already tiny here, so it is the floor
+           that has to come down. */
 
         const narrow = window.innerWidth < 640;
 
-        mark.classList.toggle("is-inline", narrow);
-
-        /* Inline, the size comes from what the words measure, not
-           from a floor - so the mark takes the same share of the
-           screen at every width. 86% of the gutter-to-gutter room,
-           capped so a tablet-sized phone does not get a banner. */
-
-        const inlineW = w[0] + w[1] + w[2];
-
-        const heroPx = narrow
-            ? Math.min(
-                dockPx * ((window.innerWidth - 30) * 0.86) / inlineW, 52
-            )
-            : Math.min(Math.max(34, window.innerWidth * 0.046), 64);
+        const heroPx = Math.min(
+            Math.max(narrow ? 22 : 34, window.innerWidth * 0.046), 64
+        );
 
         const scale = heroPx / dockPx;
 
         mark.style.setProperty("--brand-scale", scale);
 
-        // Three stacked lines, or one when inline, sitting above
-        // the hero's bottom. .heroTag reads this, so getting it
-        // wrong moves the tag as well as the mark.
-        const blockH = lh * (narrow ? 1 : 3) * scale;
+        // Three stacked lines, sitting above the hero's bottom.
+        // .heroTag reads this, so getting it wrong moves the tag
+        // as well as the mark.
+        const blockH = lh * 3 * scale;
         /* 9% of a tall phone is 73px of empty space under a block
            that is already too low. The floor is enough here. */
 
