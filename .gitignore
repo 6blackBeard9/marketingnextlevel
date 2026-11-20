@@ -1,0 +1,27 @@
+# Reference footage and screen recordings — working material, not
+# part of the site. mnlwebsitereview3.mp4 alone is 105MB, which
+# GitHub refuses outright (100MB hard limit per file).
+assets/videos/mnlwebsitereview3.mp4
+assets/videos/REFERENCE_VIDEO.mp4
+assets/videos/scroll_effect.mp4
+assets/videos/clientsectionreview.mp4
+assets/videos/animation_client.mp4
+
+# Hero footage the robot replaced; kept locally in case it comes back
+assets/videos/light.mp4
+assets/videos/network.mp4
+
+# Build output — regenerated from source, no reason to version it
+_deploy/
+*.zip
+
+# Client logos not yet wired into the marquee
+assets/images/client logos/
+
+# OS noise
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Editor backup
+.claude/launch.json.bak

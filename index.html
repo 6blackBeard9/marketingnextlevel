@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>MARKETINGNEXTLEVEL | AI Powered Marketing Agency</title>
+
+    <meta name="description" content="Premium AI Powered Digital Marketing Agency">
+
+    <meta name="theme-color" content="#050505">
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+
+    <!-- ?v= is a cache buster: bump it after editing a css/js
+         file so browsers pick the new one up instead of a
+         stale copy. -->
+
+    <link rel="stylesheet" href="assets/css/style.css?v=127">
+
+    <link rel="stylesheet" href="assets/css/animations.css?v=127">
+
+    <link rel="stylesheet" href="assets/css/responsive.css?v=127">
+
+</head>
+
+<body>
+
+    <!-- Cursor -->
+
+    <div id="cursor"></div>
+    <div id="cursorBlur"></div>
+    <div id="mouseGlow"></div>
+
+    <!-- ======================================================
+    LOADER
+    ====================================================== -->
+
+    <div id="loader">
+
+        <canvas id="grainCanvas"></canvas>
+        
+        <div class="loader-bg">
+
+            <div id="particles"></div>
+
+            <div class="noise"></div>
+
+        </div>
+
+        <div class="loader-content">
+
+            <h1 id="brandTyping"></h1>
+
+            <div id="loaderTick">
+                ✓
+            </div>
+
+            <p id="brandTagline">
+                We Build Brands That People Remember.
+            </p>
+
+        </div>
+
+        <button id="soundHint" type="button">
+            <span class="dot"></span> Click anywhere for sound
+        </button>
+
+    </div>
+
+    <!-- ======================================================
+    WEBSITE
+    ====================================================== -->
+
+    <div id="website">
+
+        <!-- ================= NAVBAR ================= -->
+
+        <header class="navbar">
+
+            <!-- ==================================================
+            MENU
+
+            A solid circle that expands into one pill per link.
+            Each pill carries its own colour on --pill and sizes
+            itself to its word. Opens on hover, on click (touch)
+            and on keyboard focus.
+            ================================================== -->
+
+            <div class="navMenu">
+
+                <ul class="navMenu-list" id="navMenuList">
+
+                    <li style="--pill:#0D1428; --pill-size:16px; --pill-pad:15px 30px">
+                        <a href="#home" data-section="Home">Home</a></li>
+
+                    <li style="--pill:#182A57; --pill-size:12px; --pill-pad:10px 18px">
+                        <a href="#clients" data-section="Clients">Clients</a></li>
+
+                    <li style="--pill:#23408E; --pill-size:18px; --pill-pad:17px 34px">
+                        <a href="#services" data-section="Services">Services</a></li>
+
+                    <li style="--pill:#2C51B5; --pill-size:13px; --pill-pad:11px 20px">
+                        <a href="#portfolio" data-section="Portfolio">Portfolio</a></li>
+
+                    <li style="--pill:#3559C7; --pill-size:15px; --pill-pad:14px 27px">
+                        <a href="#" data-section="Contact">Contact</a></li>
+
+                </ul>
+
+                <button class="navMenu-toggle" type="button"
+                        aria-expanded="false" aria-controls="navMenuList">
+
+                    Menu
+
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- ==================================================
+        WORDMARK
+
+        Sits outside .hero on purpose: .hero clips its overflow,
+        which would swallow this once it docks to the top. It is
+        position:fixed, so it travels from the hero's bottom-left
+        up to the bar regardless of where it lives in the markup.
+
+        Stacked over three lines in the hero; on scroll the 2nd
+        and 3rd words slide up beside the first to close into one
+        word. app.js measures the words and writes the offsets,
+        CSS animates between the two states.
+        ================================================== -->
+
+        <div class="brandMark is-hero" id="brandMark"
+             aria-label="MarketingNextLevel"><span
+             class="brandMark-word shimmer" data-gradient="brand"
+             data-delay="0">marketing</span><span
+             class="brandMark-word shimmer" data-gradient="brand"
+             data-delay="150">next</span><span
+             class="brandMark-word shimmer" data-gradient="brand"
+             data-delay="300">level</span></div>
+
+        <!-- ==================================================
+        HERO
+
+        Full-bleed and sticky: it pins to the viewport while
+        .pageBody scrolls up over it. .pageBody carries an
+        opaque background and a higher z-index, which is what
+        does the covering.
+
+        Clips crossfade as each phrase types itself in,
+        advancing on their own counter so the phrase/clip
+        pairing keeps shuffling. Add or remove <video> tags
+        freely; phrases live in heroPhrases (app.js).
+        ================================================== -->
+
+        <section class="hero" id="home" data-nav="Home">
+
+            <!-- ==================================================
+            ROBOT
+            
+            Replaces the video background. assets/js/robot.js draws
+            into this canvas — a hand port of the R3F component, with
+            three.js off the CDN and no build step.
+            
+            The heading sits behind it on purpose: it is still the
+            page h1, just read through the robot rather than over it.
+            ================================================== -->
+
+            <div class="heroBackText">
+
+                <h1 class="heroTitle">
+
+                    <span class="heroTitle-line">Creative Agency For</span>
+
+                    <span class="heroTitle-line">Leading Brands</span>
+
+                </h1>
+
+            </div>
+
+            <canvas id="robotCanvas" class="heroRobot" aria-hidden="true"></canvas>
+
+            <div class="hero-content">
+
+                <div class="badge">
+
+                    AI Powered Digital Agency
+
+                </div>
+
+                <a href="#" class="heroBtn">
+
+                    Book a Free Strategy Call
+
+                </a>
+
+            </div>
+
+            <!-- ==================================================
+            HERO TAG
+
+            Mirrors the wordmark: three lines at the bottom-right,
+            reading against marketing / next / level on the left.
+            Size and bottom offset come from --hero-mark-* , which
+            app.js writes while measuring the wordmark, so the two
+            blocks stay matched at any viewport.
+            ================================================== -->
+
+            <div class="heroTag">
+
+                <span class="heroTag-line">helping brands</span>
+
+                <span class="heroTag-line">build their</span>
+
+                <h2 id="changingText" class="heroTag-line">
+
+                    <span class="type"></span><span class="caret"></span>
+
+                </h2>
+
+            </div>
+
+        </section>
+
+        <!-- Everything below scrolls over the pinned hero -->
+
+        <div class="pageBody">
+
+        <!-- ======================================================
+        OUR WORK
+
+        One finished piece per screen. The image is shown whole
+        rather than cropped — these are the deliverables, and a
+        cover-crop would cut the client's own headline off. The
+        blurred copy behind it fills the panel so a 4:5 post can
+        hold a 16:9 screen without letterboxing to black.
+
+        All three pin, stacking over the hero and each other.
+        The clients panel that follows is the one that travels,
+        so it lifts the run off the pin and carries the scroll
+        on into Services.
+
+        No data-nav on these: there's no matching menu pill, and
+        a section without one would drop the bar back to "Menu"
+        for the length of the run.
+        ====================================================== -->
+
+        <section class="workPage section is-pinned" id="work">
+
+            <div class="eqPanel">
+
+                <div class="workPage-bg" aria-hidden="true"
+                     style="background-image:url('assets/images/ourwork/bhimson.png')"></div>
+
+                <div class="container workPage-inner">
+
+                    <div class="workPage-text">
+
+                        <span class="miniTitle">Bhimsons Agro &middot; Campaign</span>
+
+                        <h2 class="workPage-title">A retreat, in its best light.</h2>
+
+                    </div>
+
+                    <figure class="workPage-shot">
+
+                        <img src="assets/images/ourwork/bhimson.png"
+                             alt="New Year campaign post for Bhimsons Agro, an eco retreat"
+                             decoding="async" loading="lazy">
+
+                    </figure>
+
+                </div>
+            </div>
+
+        </section>
+
+        <section class="workPage section is-pinned">
+
+            <div class="eqPanel">
+
+                <div class="workPage-bg" aria-hidden="true"
+                     style="background-image:url('assets/images/ourwork/nagzira.png')"></div>
+
+                <div class="container workPage-inner">
+
+                    <div class="workPage-text">
+
+                        <span class="miniTitle">Nagzira Safari &middot; Social</span>
+
+                        <h2 class="workPage-title">The jungle, sold in one frame.</h2>
+
+                    </div>
+
+                    <figure class="workPage-shot">
+
+                        <img src="assets/images/ourwork/nagzira.png"
+                             alt="Let's Explore social post for Nagzira Jungle Safari"
+                             decoding="async" loading="lazy">
+
+                    </figure>
+
+                </div>
+            </div>
+
+        </section>
+
+        <section class="workPage section is-pinned">
+
+            <div class="eqPanel">
+
+                <div class="workPage-bg" aria-hidden="true"
+                     style="background-image:url('assets/images/ourwork/nails.png')"></div>
+
+                <div class="container workPage-inner">
+
+                    <div class="workPage-text">
+
+                        <span class="miniTitle">Hand n Stoone &middot; Content</span>
+
+                        <h2 class="workPage-title">Advice worth saving.</h2>
+
+                    </div>
+
+                    <figure class="workPage-shot">
+
+                        <img src="assets/images/ourwork/nails.png"
+                             alt="Nail care guide post for Hand n Stoone"
+                             decoding="async" loading="lazy">
+
+                    </figure>
+
+                </div>
+            </div>
+
+        </section>
+
+        <!-- ======================================================
+        TRUSTED
+        ====================================================== -->
+
+        <section class="trusted section" id="clients" data-nav="Clients">
+
+            <!-- ==================================================
+            EQ PANEL
+
+            The panel is the equaliser. Its top edge is cut into
+            vertical columns whose heights are driven by scroll,
+            so the section rises as a row of rectangles and
+            settles into a flat edge once it pins. Everything —
+            background, heading, marquee — is clipped by that
+            edge, which is what makes it read as the panel
+            arriving rather than as a graphic sitting on top.
+
+            The clip is written by initEqArrival() in app.js.
+            ================================================== -->
+
+            <div class="eqPanel">
+
+            <div class="container">
+
+                <!-- ==================================================
+                CLIENTS
+
+                Names below are PLACEHOLDERS — swap the <li>
+                contents for the real client list. Everything
+                else (spacing, speed, path) adapts on its own.
+                ================================================== -->
+
+                                <div class="clientsCaption">
+
+                    <span class="miniTitle">OUR CLIENTS</span>
+
+                    <h2>
+
+                        Brands that refused to blend in.
+
+                    </h2>
+
+                    <p>
+
+                        From first launch to category leader —
+                        these are the teams we build with.
+
+                    </p>
+
+                </div>
+
+                <div class="clientsWrap">
+
+                <!-- Curved entry on the left, a wide rotation in
+                     the middle, then a sweep up to the top right.
+                     Dials:
+                       data-spacing  gap between card centres in
+                                     path units. Card is 74 wide,
+                                     so 82 leaves a small gap.
+                                     Lower closes it, higher opens
+                                     it. Card count derives from
+                                     this, so the client list can
+                                     be any length.
+                       data-rotate   "auto" banks cards into the
+                                     curve, "0deg" pins upright
+                       data-fade     % of path used to fade at the
+                                     ends (0 = hard cut) -->
+
+                <div class="pathMarquee"
+                     data-path="M20 328C37.3 328 54.5 327.3 71.8 326.1C88.8 324.9 105.9 323.3 122.9 321.5C139.9 319.7 157 317.7 174 315.8C191 313.8 208.1 311.9 225.1 310.3C242.2 308.7 259.3 307.4 276.4 306.7C293.6 305.9 310.8 306 328 306C345.1 306 362.2 306 379.3 306C395.3 306 395.9 306.5 431.1 305.9C442.1 305.8 460.4 305.2 482.9 299.2C497.6 295.3 514 288.9 530 278.8C543.7 270.1 557 258.7 568.1 244.5C578.6 231.2 587.2 215.4 592.2 198.3C596.9 182.2 598.5 164.9 596.4 148C594.2 131.2 588.3 114.8 579 100.7C569.4 86.2 556.1 74.2 540.8 66.4C525.5 58.6 508.1 55.1 491.1 56.2C474 57.4 457.3 63.3 443.1 73C428.9 82.8 417.3 96.4 409.5 112C401.9 127.2 398 144.2 397.7 161.2C397.4 178.7 401.1 196.2 407.7 212C414.3 227.8 423.8 242 434.8 253.8C447.2 267.1 461.5 277.4 475.6 284.9C492.5 293.9 509.1 299 523.5 301.9C549.2 307 567.2 306 573.7 306C591.5 306 607.7 306.2 624.8 301.9C640.6 298 656.4 291.4 672.3 282.8C686.8 275 701.4 265.6 716 255.2C729.6 245.5 743.2 235 756.8 224.1C770.1 213.4 783.4 202.5 796.7 191.7C810.1 180.7 823.6 170 837 159.8C851.1 149.2 865.2 139.3 879.3 130.6C894.5 121.3 909.8 113.4 925.1 107.7C941.7 101.5 958.4 98 975 98"
+                     data-viewbox="0 0 996 390"
+                     data-velocity="6"
+                     data-spacing="82"
+                     data-rotate="auto"
+                     data-fade="3"
+                     data-slow-factor="0.2">
+
+                    <!-- Real client list. Card text auto-fits the
+                         74x62 box (see fitLabels in clients.js), so
+                         names of any length can be added or removed
+                         here without touching the layout. Swap any
+                         <li> body for an <img> to use a logo. -->
+
+                    <ul class="pm-source">
+
+                        <li>Bhimsons Agro</li>
+
+                        <li>Sharma Glass</li>
+
+                        <li>GNCC</li>
+
+                        <li>Hand and Stoone</li>
+
+                        <li>Vijetao Ka Mahasangram</li>
+
+                        <li>Siddhanth State</li>
+
+                        <li>Neetjee Academy</li>
+
+                        <li>Funkari &amp; Co.</li>
+
+                        <li>MLC Cup</li>
+
+                        <li>Grow India Fabtex</li>
+
+                        <li>Sheroes of Crime</li>
+
+                        <li>Vastutalkk</li>
+
+                        <li>Specilaity Panels</li>
+
+                        <li>Dharamveer Premier League</li>
+
+                        <li>Gondia Premier League</li>
+
+                    </ul>
+
+                </div>
+
+                </div>
+
+
+
+            </div>
+
+            </div>
+
+        </section>
+
+        <!-- ======================================================
+        SERVICES
+        ====================================================== -->
+
+        <section class="services section" id="services" data-nav="Services">
+
+            <div class="container">
+
+                                <div class="servicesIntro">
+
+                    <span class="miniTitle">SERVICES WE PROVIDE</span>
+
+                    <p>
+                        We are a creative growth agency. Not just websites,
+                        not just marketing, not just content. We combine
+                        branding, design, AI automation, web development,
+                        performance marketing, and creative strategy into
+                        one connected ecosystem. Every solution is designed
+                        to help businesses grow, scale, and stay ahead.
+                    </p>
+
+                </div>
+
+                <!-- ==================================================
+                COVERFLOW
+
+                Vanilla port of the React CoverflowCarousel. Tuning
+                lives on the data- attributes below; assets/js/
+                carousel.js reads them and does the rest. Drag,
+                arrow keys, arrows and dots all drive one fractional
+                position — there are no cloned nodes, the ring is
+                folded in the maths.
+                ================================================== -->
+
+                <div class="coverflow"
+                     data-rotate="44"
+                     data-speed="0.62"
+                     data-depth="0.6"
+                     data-perspective="3"
+                     data-falloff="0.56"
+                     data-fade="0.1"
+                     data-gap="0.06"
+                     data-loop="true"
+                     aria-roledescription="carousel"
+                     aria-label="What we do">
+
+                    <div class="coverflow-frame" tabindex="0">
+
+                        <div class="coverflow-track">
+
+                        <article class="cfCard"
+                                 data-title="Website Creation"
+                                 data-media="assets/videos/website_service.mp4">
+
+                            <span class="cfCard-icon"><i data-lucide="monitor-smartphone"></i></span>
+
+                            <h3>Website Creation</h3>
+
+                            <p class="cfCard-note">Fast, durable builds that hold up under real traffic. We handle design, build and launch, then keep it quick as you grow.</p>
+
+                        </article>
+
+                        <article class="cfCard"
+                                 data-title="Social Media Management"
+                                 data-media="assets/images/services/socialMediaManagement.png">
+
+                            <span class="cfCard-icon"><i data-lucide="megaphone"></i></span>
+
+                            <h3>Social Media Management</h3>
+
+                            <p class="cfCard-note">Planning, posting and replies handled daily. We keep feeds earning attention instead of just filling space.</p>
+
+                        </article>
+
+                        <article class="cfCard"
+                                 data-title="Brand & Event Design"
+                                 data-media="assets/images/services/brandAndEventDesigning.jpg">
+
+                            <span class="cfCard-icon"><i data-lucide="palette"></i></span>
+
+                            <h3>Brand & Event Design</h3>
+
+                            <p class="cfCard-note">Identity systems and spaces people recognise at a glance, from a business card to a stage backdrop.</p>
+
+                        </article>
+
+                        <article class="cfCard"
+                                 data-title="Paid Ads Management">
+
+                            <span class="cfCard-icon"><i data-lucide="target"></i></span>
+
+                            <h3>Paid Ads Management</h3>
+
+                            <p class="cfCard-note">Campaigns that report what they earn. We start small, cut what fails and move the budget to whatever is working.</p>
+
+                        </article>
+
+                        <article class="cfCard"
+                                 data-title="Graphics Designing"
+                                 data-media="assets/images/services/graphicsDesigning.png">
+
+                            <span class="cfCard-icon"><i data-lucide="pen-tool"></i></span>
+
+                            <h3>Graphics Designing</h3>
+
+                            <p class="cfCard-note">Artwork built for how people actually look at it: legible in a scroll, sharp up close.</p>
+
+                        </article>
+
+                        <article class="cfCard"
+                                 data-title="AI Automation"
+                                 data-media="assets/images/services/aiautomation.png">
+
+                            <span class="cfCard-icon"><i data-lucide="bot"></i></span>
+
+                            <h3>AI Automation</h3>
+
+                            <p class="cfCard-note">Workflows that run themselves: replies, follow-ups and reporting, off your team for good.</p>
+
+                        </article>
+
+                        <article class="cfCard"
+                                 data-title="Production"
+                                 data-media="assets/images/services/production.avif">
+
+                            <span class="cfCard-icon"><i data-lucide="clapperboard"></i></span>
+
+                            <h3>Production</h3>
+
+                            <p class="cfCard-note">Full shoots end to end, from crew and direction to lighting and edit. You approve the brief and the final cut.</p>
+
+                        </article>
+
+                        <article class="cfCard"
+                                 data-title="Print & Printing"
+                                 data-media="assets/images/services/PRINTING.jpg">
+
+                            <span class="cfCard-icon"><i data-lucide="printer"></i></span>
+
+                            <h3>Print & Printing</h3>
+
+                            <p class="cfCard-note">Brochures, banners, packaging and signage, colour-checked so it matches what you signed off.</p>
+
+                        </article>
+
+                        <article class="cfCard"
+                                 data-title="Video & Photography" data-media="assets/images/services/videoandvideography.jpg">
+                            <span class="cfCard-icon"><i data-lucide="camera"></i></span>
+
+                            <h3>Video & Photography</h3>
+
+                            <p class="cfCard-note">Films and stills made to be watched, not scrolled past. Cut for every platform you post to.</p>
+
+                        </article>
+
+                        </div>
+
+                    </div>
+
+                    <button class="coverflow-nav is-prev" type="button"
+                            aria-label="Previous service">
+                        <i data-lucide="chevron-left"></i>
+                    </button>
+
+                    <button class="coverflow-nav is-next" type="button"
+                            aria-label="Next service">
+                        <i data-lucide="chevron-right"></i>
+                    </button>
+
+                    <div class="coverflow-caption" aria-live="polite">
+
+                        <p class="coverflow-title"></p>
+
+                        <p class="coverflow-note"></p>
+
+                    </div>
+
+                    <div class="coverflow-dots"></div>
+
+                </div>
+
+            
+
+            </div>
+
+        </section>
+
+        <!-- ======================================================
+        MANIFESTO
+        
+        A tall section that pins its stage: scrolling drives one
+        huge word at a time past the middle of the screen, each in
+        its own block, ending on the statement.
+        
+        The height is what makes it work — every 100vh of scroll is
+        one word, so the track length and the word count have to
+        stay in step. manifesto.js reads both from the DOM.
+        ====================================================== -->
+
+        <section class="manifesto section" id="manifesto">
+
+            <div class="manifesto-stage">
+
+                <div class="manifesto-stack">
+
+                    <span class="manifesto-word">We</span>
+
+                    <span class="manifesto-word">make</span>
+
+                    <span class="manifesto-word">work</span>
+
+                    <span class="manifesto-word">worth</span>
+
+                    <span class="manifesto-word">watching</span>
+
+                    <span class="manifesto-word is-last">Wow.</span>
+
+                </div>
+
+                <div class="manifesto-note">
+
+                    <span class="miniTitle">THE POINT</span>
+
+                    <p>
+                        Anyone can post. Anyone can ship a site. The
+                        difference is whether a person stops, watches,
+                        and remembers who it was for. That is the only
+                        measure we build against.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ======================================================
+        PORTFOLIO
+        ====================================================== -->
+
+        <section class="portfolio section" id="portfolio" data-nav="Portfolio">
+
+
+            <div class="container">
+
+                                <div class="portfolioIntro">
+
+                    <span class="miniTitle">PORTFOLIO</span>
+
+                    <h2>Proof, not promises.</h2>
+
+                    <p>
+                        Every piece here started as a business problem.
+                        A launch that needed noise. A brand nobody could
+                        pick out of a line-up. A feed that had quietly
+                        stopped earning attention. We answered each one
+                        with work built to be watched — reels that hold a
+                        thumb, films that carry a story, posters and posts
+                        that still land three scrolls later. Some took a
+                        week. Some took the better part of a year.
+                    </p>
+
+                </div>
+
+
+            
+
+            </div>
+
+            <!-- ==================================================
+            TRAIL
+            
+            The work reveals itself along the pointer. Each piece is
+            dropped where the cursor has travelled far enough from
+            the last one, and the oldest is retired once the trail is
+            full. Click any piece still on screen to open it.
+            
+            data-src rather than src: trail.js loads them as the
+            section comes up, so ten full-size pieces are not fetched
+            on first paint.
+            ================================================== -->
+
+            <div class="trail" id="workTrail">
+
+                <p class="trail-hint">Move across to reveal the work &middot; click a piece to open it</p>
+
+                <img class="trail-item" data-status="inactive"
+                     data-src="assets/images/ourwork/bhimson.png"
+                     data-label="New Year campaign" data-client="Bhimsons Agro"
+                    alt="New Year campaign for Bhimsons Agro"></img>
+
+                <video class="trail-item" data-status="inactive"
+                     data-src="assets/videos/website_service.mp4"
+                     data-label="Site build" data-client="Website Creation"
+                    muted loop playsinline></video>
+
+                <img class="trail-item" data-status="inactive"
+                     data-src="assets/images/ourwork/nagzira.png"
+                     data-label="Safari campaign" data-client="Nagzira"
+                    alt="Safari campaign for Nagzira"></img>
+
+                <img class="trail-item" data-status="inactive"
+                     data-src="assets/images/services/socialMediaManagement.png"
+                     data-label="Always-on feed" data-client="Social"
+                    alt="Always-on feed for Social"></img>
+
+                <img class="trail-item" data-status="inactive"
+                     data-src="assets/images/ourwork/nails.png"
+                     data-label="Care guide" data-client="Hand n Stoone"
+                    alt="Care guide for Hand n Stoone"></img>
+
+                <img class="trail-item" data-status="inactive"
+                     data-src="assets/images/services/brandAndEventDesigning.jpg"
+                     data-label="Event identity" data-client="Brand & Event"
+                    alt="Event identity for Brand & Event"></img>
+
+                <img class="trail-item" data-status="inactive"
+                     data-src="assets/images/services/graphicsDesigning.png"
+                     data-label="Key art" data-client="Graphics"
+                    alt="Key art for Graphics"></img>
+
+                <img class="trail-item" data-status="inactive"
+                     data-src="assets/images/services/aiautomation.png"
+                     data-label="Automation" data-client="AI Systems"
+                    alt="Web design for Website"></img>
+
+                <img class="trail-item" data-status="inactive"
+                     data-src="assets/images/services/production.avif"
+                     data-label="On set" data-client="Production"
+                    alt="On set for Production"></img>
+
+                <img class="trail-item" data-status="inactive"
+                     data-src="assets/images/services/videoandvideography.jpg"
+                     data-label="Film & stills" data-client="Video"
+                    alt="Film & stills for Video"></img>
+
+            </div>
+
+        </section>
+
+        <!-- ======================================================
+        WHY CHOOSE US
+        ====================================================== -->
+
+        <section class="whyChoose section" id="about" data-nav="About">
+
+            <div class="container whyWrapper">
+
+                <!-- LEFT -->
+
+                <div class="whyLeft">
+
+                    <span class="miniTitle">
+
+                        WHY CHOOSE US
+
+                    </span>
+
+                    <h2>
+
+                        We Don't Just Build Websites.
+
+                        <br>
+
+                        We Build Growth Engines.
+
+                    </h2>
+
+                    <p>
+
+                        Every project combines branding, technology,
+                        AI, automation and marketing into one
+                        complete digital ecosystem.
+
+                    </p>
+
+                    <a href="#" class="heroBtn">
+
+                        Let's Grow Together
+
+                    </a>
+
+                </div>
+
+                <!-- RIGHT -->
+
+                <div class="whyRight">
+
+                    <div class="featureCard">
+
+                        <div class="featureNumber">
+
+                            01
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+
+                                AI Powered Solutions
+
+                            </h3>
+
+                            <p>
+
+                                Intelligent automation that saves
+                                time and increases productivity.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="featureCard">
+
+                        <div class="featureNumber">
+
+                            02
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+
+                                Modern Design
+
+                            </h3>
+
+                            <p>
+
+                                Beautiful experiences that convert
+                                visitors into customers.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="featureCard">
+
+                        <div class="featureNumber">
+
+                            03
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+
+                                Performance First
+
+                            </h3>
+
+                            <p>
+
+                                Fast, responsive and SEO-ready
+                                websites from day one.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div class="featureCard">
+
+                        <div class="featureNumber">
+
+                            04
+
+                        </div>
+
+                        <div>
+
+                            <h3>
+
+                                Dedicated Support
+
+                            </h3>
+
+                            <p>
+
+                                We're your long-term growth partner,
+                                not just another agency.
+
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- ======================================================
+        FOOTER
+
+        The social buttons fall in and settle in a pile. They are
+        laid out by assets/js/footer.js, which positions each one
+        absolutely — the markup order is only the drop order.
+
+        hrefs are PLACEHOLDERS. Swap the "#" for the real
+        profile URLs; WhatsApp wants https://wa.me/<number>.
+        ====================================================== -->
+
+        <footer class="siteFooter">
+
+            <div class="container siteFooter-top">
+
+                <span class="miniTitle">SAY HELLO</span>
+
+                <h2>Let's make something worth watching.</h2>
+
+            </div>
+
+            <div class="footerDrop" aria-label="Social links">
+
+                <a class="footerDrop-pill" href="https://www.instagram.com/marketingnextlevel.media" data-net="instagram"
+                   target="_blank" rel="noopener">Instagram</a>
+
+                <a class="footerDrop-pill" href="#" data-net="facebook"
+                   target="_blank" rel="noopener">Facebook</a>
+
+                <a class="footerDrop-pill" href="#" data-net="whatsapp"
+                   target="_blank" rel="noopener">WhatsApp</a>
+
+                <a class="footerDrop-pill" href="#" data-net="x"
+                   target="_blank" rel="noopener">X</a>
+
+                <a class="footerDrop-pill" href="#" data-net="linkedin"
+                   target="_blank" rel="noopener">LinkedIn</a>
+
+                <a class="footerDrop-pill" href="#" data-net="youtube"
+                   target="_blank" rel="noopener">YouTube</a>
+
+            </div>
+
+            <div class="container siteFooter-base">
+
+                <span>&copy; 2026 MarketingNextLevel</span>
+
+                <span>Nagpur &middot; India</span>
+
+            </div>
+
+        </footer>
+
+        </div>
+
+
+        <!-- ======================================================
+        LIGHTBOX
+
+        Opened by clicking a piece in the trail. Sits outside the
+        panels so no section's overflow can clip it.
+        ====================================================== -->
+
+        <div class="lightbox" id="workLightbox" role="dialog"
+             aria-modal="true" aria-label="Work viewer" hidden>
+
+            <button class="lightbox-close" type="button"
+                    aria-label="Close">&times;</button>
+
+            <figure class="lightbox-frame">
+                <div class="lightbox-stage"></div>
+                <figcaption class="lightbox-caption"></figcaption>
+            </figure>
+
+        </div>
+
+    </div>
+
+    <!-- ======================================================
+    THREE.JS
+
+    The hero robot's only real dependency. An import map means
+    the ES module can name "three" without a bundler, which is
+    what keeps this project build-free. Must come before any
+    module script that imports it.
+    ====================================================== -->
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <script type="module" src="assets/js/robot.js?v=127"></script>
+
+    <!-- GSAP -->
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+
+    <!-- Lucide -->
+
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- JS -->
+
+    <script src="assets/js/flowfield.js?v=127"></script>
+    <script src="assets/js/grains.js?v=127"></script>
+    <script src="assets/js/sound.js?v=127"></script>
+    <script src="assets/js/app.js?v=127"></script>
+    <script src="assets/js/clients.js?v=127"></script>
+    <script src="assets/js/carousel.js?v=127"></script>
+    <script src="assets/js/shimmer.js?v=127"></script>
+    <script src="assets/js/footer.js?v=127"></script>
+    <script src="assets/js/trail.js?v=127"></script>
+    <script src="assets/js/manifesto.js?v=127"></script>
+
+    <script>
+
+        lucide.createIcons();
+
+    </script>
+
+
+</body>
+
+</html>

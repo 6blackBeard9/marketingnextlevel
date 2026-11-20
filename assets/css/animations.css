@@ -1,0 +1,329 @@
+/*======================================================
+MARKETINGNEXTLEVEL
+Animation Styles
+======================================================*/
+
+/*==============================
+Background Gradient
+==============================*/
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+
+    background:
+        radial-gradient(circle at 20% 20%, rgba(48, 92, 222, .18), transparent 40%),
+        radial-gradient(circle at 80% 25%, rgba(48, 92, 222, .12), transparent 35%),
+        radial-gradient(circle at 50% 90%, rgba(48, 92, 222, .15), transparent 45%);
+
+    background-size: 200% 200%;
+
+    animation: gradientMove 18s ease infinite;
+}
+
+@keyframes gradientMove {
+
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+
+}
+
+
+/*==============================
+Loader Cursor
+==============================*/
+
+#brandTyping::after {
+
+    content: "|";
+
+    margin-left: 6px;
+
+    animation: blink .8s infinite;
+
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+
+        opacity: 1;
+
+    }
+
+    50% {
+
+        opacity: 0;
+
+    }
+
+}
+
+
+/*==============================
+Gradient Sweep
+==============================*/
+
+.gradientSweep {
+
+    position: relative;
+
+    display: inline-block;
+
+    overflow: hidden;
+
+}
+
+.gradientSweep::after {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: -140%;
+
+    width: 120%;
+
+    height: 100%;
+
+    background:
+
+        linear-gradient(90deg,
+            transparent,
+            rgba(15, 9, 9, 0.75),
+            transparent);
+
+    transform: skewX(-20deg);
+
+}
+
+.gradientSweep.active::after {
+
+    animation: sweep 1.2s ease forwards;
+
+}
+
+@keyframes sweep {
+
+    from {
+
+        left: -120%;
+
+    }
+
+    to {
+
+        left: 150%;
+
+    }
+
+}
+
+
+/*==============================
+Button Shine
+==============================*/
+
+.heroBtn {
+
+    position: relative;
+
+    overflow: hidden;
+
+}
+
+.heroBtn::before {
+
+    content: "";
+
+    position: absolute;
+
+    top: 0;
+
+    left: -120%;
+
+    width: 60%;
+
+    height: 100%;
+
+    background:
+
+        linear-gradient(90deg,
+
+            transparent,
+
+            rgba(255, 255, 255, .45),
+
+            transparent);
+
+    transform: skewX(-25deg);
+
+}
+
+.heroBtn:hover::before {
+
+    animation: buttonSweep .8s;
+
+}
+
+@keyframes buttonSweep {
+
+    from {
+
+        left: -120%;
+
+    }
+
+    to {
+
+        left: 160%;
+
+    }
+
+}
+
+
+/*==============================
+Logo Hover
+==============================*/
+
+.logo {
+
+    transition: .35s;
+
+}
+
+
+/*==============================
+Section Fade (used by GSAP)
+==============================*/
+
+.reveal {
+
+    opacity: 0;
+
+    transform: translateY(60px);
+
+}
+
+
+/*==============================
+Changing Text Container
+==============================*/
+
+/* Positioning and colour now live in style.css — the line
+   sits over the hero video, so it is white, not primary. */
+
+/* Loads after style.css, so this is the one that decides the
+   alignment — the line now sits in the right-hand corner
+   block, not centred in the hero. */
+
+#changingText {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: flex-end;
+
+}
+
+/*==========================================================
+LOADER ANIMATIONS
+==========================================================*/
+
+@keyframes auroraOne {
+
+    0% {
+
+        transform:
+            translate(-120px, -60px) scale(1);
+
+    }
+
+    100% {
+
+        transform:
+            translate(180px, 120px) scale(1.2);
+
+    }
+
+}
+
+@keyframes auroraTwo {
+
+    0% {
+
+        transform:
+            translate(100px, 40px) scale(1);
+
+    }
+
+    100% {
+
+        transform:
+            translate(-160px, -120px) scale(1.25);
+
+    }
+
+}
+
+@keyframes cursorBlink {
+
+    0% {
+
+        opacity: 1;
+
+    }
+
+    50% {
+
+        opacity: 0;
+
+    }
+
+    100% {
+
+        opacity: 1;
+
+    }
+
+}
+
+@keyframes textGlow {
+
+    from {
+
+        text-shadow:
+
+            0 0 12px rgba(255, 255, 255, .12),
+
+            0 0 25px rgba(48, 92, 222, .15);
+
+    }
+
+    to {
+
+        text-shadow:
+
+            0 0 25px rgba(255, 255, 255, .45),
+
+            0 0 70px rgba(48, 92, 222, .35);
+
+    }
+
+}
