@@ -74,6 +74,56 @@ assets/
 `?v=` query strings on the CSS and JS are cache-busters — bump them after
 editing a file so browsers don't serve a stale copy.
 
+## Deploying
+
+Push to `main` and the live site updates. `.github/workflows/deploy.yml`
+runs a check, then publishes the repo root to GitHub Pages — the whole
+repo *is* the site, so there is nothing to build.
+
+Pages is served from the workflow rather than from the branch, which
+skips Jekyll entirely (this is plain HTML with no front matter to
+process) and means something runs before anything goes live.
+
+The check is `.github/scripts/check_assets.py`, and it exists for one
+specific failure. With no build step, a file that is referenced but
+never committed — because `.gitignore` excludes the folder it lives in —
+works perfectly on your machine and 404s in production. Nothing else
+would catch it. It reads `index.html` plus every script and stylesheet
+the page loads, since the markup names the images but the audio is only
+named inside `sound.js`.
+
+Run it yourself before pushing:
+
+```bash
+python .github/scripts/check_assets.py
+```
+
+It is also worth knowing what it deliberately ignores: a string in a
+script only counts as a path if it starts with `./`, `../`, `/` or
+`assets/`. `robot.js` imports `three/addons/…`, which ends in `.js` but
+is a bare specifier the import map resolves to a CDN.
+
+## Responsive
+
+Breakpoints live in `assets/css/responsive.css`: 400 / 640 / 900 / 1100
+/ 1150, plus short-viewport and reduced-motion blocks. Verified at 375,
+768, 1024, 1280 and 1440 wide.
+
+Two things to keep in mind when editing it:
+
+- **900px is where the pinning stops.** Sections become `position:
+  relative` and `overflow: clip` — `relative` rather than `static`
+  because the work panels' backdrops are absolutely positioned and
+  overscan on purpose, and an element whose containing block sits
+  outside the clipping box is not clipped by it. `static` there scrolled
+  the page sideways by 51px.
+- **Hover-only content needs a touch path.** A phone reaches neither a
+  cursor trail nor a `:hover` reveal. The service cards open the centred
+  card's description under `(hover: none)`; the portfolio trail becomes a
+  tappable grid (`trail.js` adds `.is-static`). Anything new that hides
+  content behind hover needs the same treatment or it is invisible on
+  half the traffic.
+
 ## Accessibility
 
 Every text/background pair is checked against WCAG AA. Because the page
@@ -87,4 +137,6 @@ colour eases and the robot all stand still.
 
 - Five of the six footer social links and the Contact nav item are `#`
 - The `ourwork` PNGs are oversized for photographic content and would be
-  roughly a quarter of the size as WebP
+  roughly a quarter of the size as WebP — they are 5.8MB of a 10.8MB
+  deploy
+- Paid Ads Management is the one service card with no artwork behind it
