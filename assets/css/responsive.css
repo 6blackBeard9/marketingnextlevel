@@ -212,10 +212,25 @@ Mobile
         display: none;
     }
 
+    /* Was 50px with 16px/15px-30px pills — a circle and five
+       stacked lozenges sized for a desktop hero. 40px still
+       clears the 24px minimum target size comfortably. */
+
     .navMenu-toggle {
-        width: 44px;
-        height: 44px;
-        font-size: 9px;
+        width: 40px;
+        height: 40px;
+        font-size: 8px;
+        letter-spacing: .8px;
+    }
+
+    .navMenu-list {
+        padding-top: 48px;
+        gap: 7px;
+    }
+
+    .navMenu-list a {
+        padding: 10px 18px;
+        font-size: 13px;
     }
 
     /* Column already fits at this width — just tuck it closer */
@@ -311,10 +326,33 @@ desktop keeps the shapes exactly as drawn.
 
 @media (hover: none) {
 
+    /* There is no pointer to hover with, so `:hover` here is the
+       browser emulating one from a touch - which opened the menu
+       on the way past. The tap on the button is the only thing
+       that should open it. */
+
+    .navMenu:hover .navMenu-list {
+        pointer-events: none;
+    }
+
+    .navMenu.is-open .navMenu-list {
+        pointer-events: auto;
+    }
+
+    .navMenu:hover .navMenu-list li:not(.is-active) {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .navMenu.is-open .navMenu-list li {
+        opacity: 1;
+        pointer-events: auto;
+    }
+
     .navMenu-list a {
         display: flex;
         align-items: center;
-        min-height: 44px;
+        min-height: 40px;
     }
 
     .heroBtn,

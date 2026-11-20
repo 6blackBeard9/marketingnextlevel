@@ -1241,6 +1241,16 @@ function initCursor() {
 }
 
 
+/* The typed intro cost about six and a half seconds before the
+   hero was usable - 0.7s waiting on audio, ~2.2s typing, a flat
+   1.8s hold, then ~2.4s of reveal. That is a long time to look at
+   a black screen, and it ran again on every single visit.
+
+   Set this back to true to have it play. Nothing else was removed:
+   the sequence is intact, it is just not in the way any more. */
+
+const PLAY_INTRO = false;
+
 window.addEventListener("load", () => {
 
     initCursor();
@@ -1249,6 +1259,39 @@ window.addEventListener("load", () => {
     initMenu();
     initEqArrival();
     initFieldScroll();
+
+    /* Browsers restore the previous scroll position on reload. With
+       the hero sticky and the panels pinned over it, coming back to
+       the page dropped you into the clients section with the hero
+       nowhere in sight - it looked like the wrong page had loaded.
+       Start at the top and let the scroll tell the story. */
+
+    if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+    }
+
+    window.scrollTo(0, 0);
+
+    if (!PLAY_INTRO) {
+
+        if (loader) loader.style.display = "none";
+
+        gsap.set("#website", { opacity: 1, visibility: "visible" });
+
+        startHeroText();
+
+        /* The wordmark picks its hero or docked position from a
+           scroll handler, and the navbar theme does the same. The
+           intro used to give them both a frame or two to settle;
+           without it nothing had told them the page was up, so the
+           mark stayed docked in the bar instead of dropping into
+           the hero. */
+
+        window.dispatchEvent(new Event("scroll"));
+
+        return;
+
+    }
 
     gsap.set("#website", {
         opacity: 0,
