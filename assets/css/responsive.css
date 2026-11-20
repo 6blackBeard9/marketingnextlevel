@@ -184,14 +184,18 @@ Mobile
        landed on it. The extra 130px is that button — 62px tall,
        sitting 152px off the bottom — plus room to breathe, so
        the bottom of the hero reads as three separate bands:
-       tag, button, wordmark. 100px cleared it by 3px at 414px
-       wide, which is not clearance, it is luck. */
+       tag, button, wordmark.
+
+       165px rather than 130px because the wordmark is one line
+       on a phone now, not three — its block is a third of the
+       height it was, so the tag rides correspondingly lower and
+       needs the difference back. */
 
     .heroTag {
         bottom: calc(
             var(--hero-mark-gap, 60px)
             + var(--hero-mark-block, 120px)
-            + 130px
+            + 165px
         );
     }
 
@@ -353,17 +357,20 @@ about things that were sized for a wide screen.
        Stronger and larger, because here it IS the hero rather
        than a texture behind the robot. */
 
-    /* The size has to come off the longest line, not off taste.
-       "Creative Agency For" measures 961px per 100px of font, the
-       lines are `white-space: nowrap` so they cannot reflow, and
-       the layer has a 15px gutter each side - so the ceiling is
-       (100vw - 30px) / 9.61, which is a shade under 9.6vw. At
-       8.8vw every width from 320px to 900px clears it by at least
-       20px. 11vw clipped the line from about 400px to 690px. */
+    /* The size comes off the longest line, measured as it is
+       actually drawn: the heading is `text-transform: uppercase`,
+       so "CREATIVE AGENCY FOR" is 1105px per 100px of font, not
+       the 964px the lower-case source text measures. Sizing to
+       the wrong figure is what put it on three lines.
+
+       With a 15px gutter each side the ceiling is
+       (100vw - 30px) / 11.05. 7vw sits at about 84% of that, so
+       each line gets its own row with room to spare, from 320px
+       right up to 900px. */
 
     .heroBackText .heroTitle {
         color: rgba(255, 255, 255, .34);
-        font-size: clamp(20px, 8.8vw, 62px);
+        font-size: clamp(18px, 7vw, 62px);
     }
 
     /* Belt and braces. The figure above is measured against the
@@ -376,8 +383,11 @@ about things that were sized for a wide screen.
         white-space: normal;
     }
 
+    /* The badge ends around 120px down, and 15vh put the heading
+       at 122px - the two were touching. This clears it. */
+
     .heroBackText {
-        padding-top: clamp(104px, 15vh, 150px);
+        padding-top: clamp(136px, 18.5vh, 184px);
     }
 
     /* 15 full-size chips stacked 785px tall read as an empty
