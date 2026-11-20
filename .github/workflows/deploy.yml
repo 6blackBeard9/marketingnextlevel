@@ -1,0 +1,72 @@
+# Push to main, and the live site updates.
+#
+# Deploying through Actions rather than letting Pages build from the
+# branch, for two reasons: it runs a check before anything goes live,
+# and it skips Jekyll entirely - which this site wants, since it is
+# plain HTML served as-is and has no front matter to process.
+
+name: Deploy site
+
+on:
+  push:
+    branches: [main]
+
+  # So a deploy can be re-run from the Actions tab without a commit
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time. `cancel-in-progress: false` because a half
+# finished deploy is worse than a slightly stale one - let it land.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+
+  check:
+    name: Check assets
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      # There is no build step, so the one failure mode that would
+      # otherwise reach production silently is a file the page asks
+      # for that never got committed.
+      - name: Every referenced file is in the repo
+        run: python3 .github/scripts/check_assets.py
+
+  deploy:
+    name: Deploy to Pages
+    needs: check
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+
+    steps:
+
+      - uses: actions/checkout@v4
+
+      # `enablement: true` turns Pages on and points it at Actions on
+      # the first run, so this needs no visit to repository settings.
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+
+      # The whole repo root is the site
+      - name: Upload site
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+
+      - name: Deploy
+        id: deploy
+        uses: actions/deploy-pages@v4
