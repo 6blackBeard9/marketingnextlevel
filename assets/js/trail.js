@@ -27,6 +27,16 @@
     // Pieces on screen at once before the oldest is retired
     var TRAIL_LENGTH = 5;
 
+    /* A trail needs a pointer to trail behind. On a touch screen
+       there is none, so the stage sat empty — 92vh of nothing
+       where the work should be. These pieces ARE the portfolio,
+       so without a pointer they lay out as a grid instead of
+       waiting on a gesture that cannot happen. */
+
+    var noHover = window.matchMedia
+        ? window.matchMedia("(hover: none)").matches
+        : false;
+
     var reduced = window.matchMedia
         ? window.matchMedia("(prefers-reduced-motion: reduce)").matches
         : false;
@@ -48,9 +58,19 @@
         this.onClick = this.onClick.bind(this);
         this.onLeave = this.onLeave.bind(this);
 
-        host.addEventListener("pointermove", this.onMove);
+        /* Click stays bound either way — it is what opens a piece,
+           and a tap fires it. The move handlers would fight the
+           grid: a tap emits a pointermove, which writes inline
+           left/top and would scatter the laid-out pieces. */
+
+        if (!noHover) {
+
+            host.addEventListener("pointermove", this.onMove);
+            host.addEventListener("pointerleave", this.onLeave);
+
+        }
+
         host.addEventListener("click", this.onClick);
-        host.addEventListener("pointerleave", this.onLeave);
 
         // Ten full-size pieces is not a first-paint cost
         if (window.IntersectionObserver) {
@@ -89,6 +109,22 @@
         });
 
         this.host.classList.add("is-loaded");
+
+        /* "active" is what onClick checks before opening a piece,
+           and what the CSS keys the visible state off — so the
+           grid gets it for free by marking every piece on screen. */
+
+        if (noHover) {
+
+            this.items.forEach(function (el) {
+
+                el.dataset.status = "active";
+
+            });
+
+            this.host.classList.add("is-static");
+
+        }
 
     };
 

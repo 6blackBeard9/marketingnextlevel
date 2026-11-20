@@ -1363,6 +1363,88 @@ exactly this — the attribute is the state, CSS does the rest.
 }
 
 /*==============================
+Trail, without a pointer
+
+Set by trail.js when `(hover: none)` matches. The pieces stop
+being a cursor effect and become a plain grid of work — every
+one on screen, each still opening the same lightbox on tap.
+Keyed off a class rather than the media query alone because
+the JS has to stop writing inline positions at the same time.
+==============================*/
+
+.trail.is-static {
+
+    display: grid;
+
+    grid-template-columns: repeat(2, 1fr);
+
+    gap: clamp(10px, 2.6vw, 18px);
+
+    /* The absolute stage needed a tall box for the pointer to
+       travel in. A grid is as tall as its rows. */
+
+    min-height: 0;
+
+    overflow: visible;
+
+    cursor: default;
+
+}
+
+.trail.is-static .trail-item {
+
+    position: static;
+
+    /* Width came from the viewport so a floating piece kept its
+       proportions; in a grid the column sets it. */
+
+    width: 100%;
+
+    height: auto;
+
+    aspect-ratio: 4 / 5;
+
+    /* No cursor to centre on, and nothing to grow from */
+
+    transform: none;
+
+}
+
+/* The hint sat over the stage on an absolute layer. In a grid
+   it would take a cell, so it goes back into the flow above. */
+
+.trail.is-static .trail-hint {
+
+    position: static;
+
+    grid-column: 1 / -1;
+
+    margin-bottom: 4px;
+
+}
+
+/* One hint per input kind — the copy names the gesture, so it
+   cannot be shared. */
+
+.trail-hint-tap {
+
+    display: none;
+
+}
+
+.trail.is-static .trail-hint-move {
+
+    display: none;
+
+}
+
+.trail.is-static .trail-hint-tap {
+
+    display: inline;
+
+}
+
+/*==============================
 Lightbox
 ==============================*/
 
@@ -1561,16 +1643,54 @@ order is only the order they are released in.
 
 }
 
+/* Default is a plain wrapped row, and the pills are visible in
+   it with no JavaScript at all. The physics is an enhancement
+   layered on top: footer.js adds .is-ready once it has actually
+   measured the box and placed every pill.
+
+   This used to be the other way round — pills hidden until the
+   solver placed them. On a phone the container measured zero at
+   the moment the solver looked, it bailed, and the footer
+   shipped with no links whatsoever. A decorative effect must
+   never be the thing standing between a visitor and a link. */
+
 .footerDrop {
 
     position: relative;
 
+    display: flex;
+
+    flex-wrap: wrap;
+
+    align-items: center;
+
+    justify-content: center;
+
+    gap: clamp(10px, 2.5vw, 16px);
+
+    min-height: clamp(150px, 26vh, 380px);
+
+    margin-top: clamp(24px, 4vw, 56px);
+
+    padding: clamp(14px, 3vw, 28px) 0;
+
+}
+
+/* The solver is driving: pills come out of flow and it places
+   them. Only set once every pill has a real position. */
+
+.footerDrop.is-ready {
+
+    display: block;
+
     height: clamp(240px, 34vh, 380px);
 
-    margin-top: clamp(28px, 4vw, 56px);
+    min-height: 0;
 
-    /* The pills are thrown in from above and must not be seen
-       before they land, nor escape sideways. */
+    padding: 0;
+
+    /* Thrown in from above, so they must not be seen before they
+       land nor escape sideways. */
 
     overflow: hidden;
 
@@ -1578,11 +1698,9 @@ order is only the order they are released in.
 
 .footerDrop-pill {
 
-    position: absolute;
+    /* In flow by default; absolute only once the solver owns it */
 
-    top: 0;
-
-    left: 0;
+    position: relative;
 
     display: inline-flex;
 
@@ -1608,18 +1726,17 @@ order is only the order they are released in.
 
     white-space: nowrap;
 
-    /* Hidden until footer.js has measured and placed them —
-       without this they stack at the top-left for a frame. */
-
-    visibility: hidden;
-
     will-change: transform;
 
 }
 
 .footerDrop.is-ready .footerDrop-pill {
 
-    visibility: visible;
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
 
 }
 
@@ -3805,7 +3922,11 @@ the icon is the part you stop needing once you're reading.
 
     color: #E4E5EA;
 
-    font-size: clamp(11px, .92vw, 13.5px);
+    /* 12px floor: at .92vw the copy fell to 11.8px between
+       1150px and ~1300px, which is under the readable floor
+       for a paragraph even as a hover reveal. */
+
+    font-size: clamp(12px, .92vw, 13.5px);
 
     line-height: 1.55;
 

@@ -640,15 +640,27 @@
 
         var world = new World(host, bodies);
 
-        if (reduced) {
+        /* Phones and tablets keep the plain wrapped row the CSS
+           already gives them. Tumbling pills need room to fall and
+           a pointer to be worth watching; on a narrow screen they
+           only make six links harder to tap. */
 
-            world.settleNow();
+        var small = window.matchMedia("(max-width: 900px)").matches ||
+                    window.matchMedia("(hover: none)").matches;
 
-            return;
-
-        }
+        if (reduced || small) return;
 
         var dropped = false;
+
+        function tryDrop() {
+
+            if (dropped) return true;
+
+            dropped = world.reset();
+
+            return dropped;
+
+        }
 
         if (window.IntersectionObserver) {
 
@@ -656,16 +668,36 @@
 
                 if (!entries[0].isIntersecting) return;
 
-                // First sight is also the first time the footer is
-                // guaranteed to have been laid out, so this is
-                // where the drop is set up rather than at init.
-                if (!dropped) dropped = world.reset();
-
-                if (dropped) world.start();
+                if (tryDrop()) world.start();
 
             }, { threshold: 0.25 }).observe(host);
 
-        } else if (world.reset()) {
+            /* The observer can fire while the footer still measures
+               zero — images above it are often mid-load and the
+               layout has not settled. One missed attempt used to
+               leave the pills unplaced for good, so watch the box
+               and take the first size it reports. */
+
+            if (window.ResizeObserver) {
+
+                var ro = new ResizeObserver(function () {
+
+                    if (host.getBoundingClientRect().width < 40) return;
+
+                    if (tryDrop()) {
+
+                        world.start();
+                        ro.disconnect();
+
+                    }
+
+                });
+
+                ro.observe(host);
+
+            }
+
+        } else if (tryDrop()) {
 
             world.start();
 

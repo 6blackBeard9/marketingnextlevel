@@ -33,10 +33,33 @@ Tablet
        back to normal flow and simply scroll. */
 
     .pageBody > section {
-        position: static;
+
+        /* `relative`, not `static`. Both drop the pinning — the
+           point here — but `static` also stops the section being
+           a containing block, and the backdrops inside it are
+           absolutely positioned. They then resolved against an
+           ancestor further out, which put them outside the box
+           doing the clipping, and `overflow` does not clip a
+           descendant whose containing block it does not contain.
+           So the overscan escaped regardless of the value below. */
+
+        position: relative;
+
         height: auto;
         min-height: 0;
-        overflow: visible;
+
+        /* `clip`, not `visible`. The work pages paint a backdrop
+           wider than the panel on purpose — the blur has to run
+           past the edge or it shows a soft seam — and the
+           carousel strip runs on past the last card. Both were
+           held in by the `overflow: hidden` this rule overrides,
+           so `visible` let them push the document 51px wider than
+           the viewport and the whole page scrolled sideways.
+
+           `clip` because `hidden` makes a scroll container, which
+           would kill the manifesto's sticky stage. */
+
+        overflow: clip;
     }
 
     /* No sticky panel to arrive, and nothing behind it to show
@@ -52,7 +75,7 @@ Tablet
 
     .pageBody > .trusted,
     .pageBody > .workPage.is-pinned {
-        position: static;
+        position: relative;
         height: auto;
         min-height: 0;
         background: var(--bg);
@@ -303,6 +326,131 @@ Reduced Motion
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: .01ms !important;
+    }
+
+}
+
+/*==============================
+Phone and tablet corrections
+
+Found by checking the live site on an iPhone 12. These are
+layout problems, not broken behaviour — everything below is
+about things that were sized for a wide screen.
+==============================*/
+
+@media (max-width: 900px) {
+
+    /* 13% white reads as a watermark behind a 90px headline. At
+       29px it is simply invisible, and the hero came out empty.
+       Stronger and larger, because here it IS the hero rather
+       than a texture behind the robot. */
+
+    .heroBackText .heroTitle {
+        color: rgba(255, 255, 255, .34);
+        font-size: clamp(34px, 11vw, 62px);
+    }
+
+    .heroBackText {
+        padding-top: clamp(104px, 15vh, 150px);
+    }
+
+    /* 15 full-size chips stacked 785px tall read as an empty
+       screen followed by a list. Tighter, so the section is one
+       readable block. */
+
+    .pm-source {
+        gap: 8px;
+        padding: 4px 0;
+    }
+
+    .pm-source li {
+        padding: 9px 16px;
+        font-size: 13px;
+    }
+
+    /* The carousel card is sized off viewport width, which leaves
+       it tiny on a phone. Give it the room the panel has. */
+
+    .coverflow {
+        --cf-card: clamp(210px, 62vw, 300px);
+    }
+
+    /* A trail needs somewhere to travel; at phone height it only
+       ever showed a piece or two. */
+
+    .trail {
+        min-height: 58vh;
+    }
+
+    .trail-item {
+        width: clamp(118px, 34vw, 170px);
+        height: clamp(150px, 43vw, 215px);
+    }
+
+    /* On touch this paragraph is not a hover reveal — it is the
+       only description the card ever shows, so it has to read as
+       body copy rather than as a caption. */
+
+    .cfCard-note {
+        font-size: 13px;
+        line-height: 1.45;
+    }
+
+    /* One word per screen is a long scroll on a phone.
+
+       Has to be `.pageBody > .manifesto` to outweigh the
+       `.pageBody > section { height: auto }` rule above, which
+       otherwise collapses the track to the sticky stage's own
+       100vh. With no track there is no scroll budget, manifesto.js
+       bails on `budget <= 0`, and all six words sit stacked and
+       dimmed with only the first one lit. */
+
+    .pageBody > .manifesto {
+        height: 320vh;
+    }
+
+    .manifesto-word {
+        font-size: clamp(42px, 17vw, 92px);
+    }
+
+}
+
+/*==============================
+Tablet
+==============================*/
+
+@media (min-width: 901px) and (max-width: 1150px) {
+
+    /* The curved marquee is hidden below 1150px, so this range
+       gets the chip list too — it just has more room for it. */
+
+    .pm-source li {
+        padding: 11px 20px;
+    }
+
+    .coverflow {
+        --cf-card: clamp(220px, 30vw, 290px);
+    }
+
+}
+
+/*==============================
+Very narrow phones (SE, mini)
+==============================*/
+
+@media (max-width: 400px) {
+
+    .heroBackText .heroTitle {
+        font-size: clamp(30px, 10vw, 46px);
+    }
+
+    .footerDrop-pill {
+        padding: 12px 20px;
+        font-size: 13px;
+    }
+
+    .siteFooter-top h2 {
+        font-size: clamp(27px, 8.4vw, 40px);
     }
 
 }

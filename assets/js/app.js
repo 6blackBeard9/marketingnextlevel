@@ -934,7 +934,39 @@ function initMenu() {
         menu.classList.toggle("is-open", open);
         toggle.setAttribute("aria-expanded", open ? "true" : "false");
 
+        /* Closing has to drop focus as well as the class. The list
+           is also held open by :focus-within, and a tap leaves the
+           button focused — so on a phone it sprang straight back
+           open and there was no way to dismiss it. Keyboard users
+           are unaffected: they move focus with Tab, not by closing. */
+
+        if (!open && document.activeElement &&
+            menu.contains(document.activeElement)) {
+
+            document.activeElement.blur();
+
+        }
+
     }
+
+    /* Scrolling away is a dismissal too — on touch there is no
+       pointer leaving the menu to close it. */
+
+    let menuScrollFrom = window.scrollY;
+
+    window.addEventListener("scroll", () => {
+
+        if (!menu.classList.contains("is-open")) {
+
+            menuScrollFrom = window.scrollY;
+
+            return;
+
+        }
+
+        if (Math.abs(window.scrollY - menuScrollFrom) > 80) setOpen(false);
+
+    }, { passive: true });
 
     toggle.addEventListener("click", e => {
 
@@ -943,7 +975,9 @@ function initMenu() {
 
     });
 
-    document.addEventListener("click", e => {
+    // pointerdown, not click: a tap on a non-interactive area of
+    // the page does not always deliver a click to document on iOS
+    document.addEventListener("pointerdown", e => {
 
         if (!menu.contains(e.target)) setOpen(false);
 
